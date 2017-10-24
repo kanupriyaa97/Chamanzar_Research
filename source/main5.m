@@ -1,15 +1,38 @@
-function main5()
-main4;
-tic ;         % We will measure elapsed time in a loop
-%                  % Set up the stop box:
-FS = stoploop({'Stop me before', '5 seconds have elapsed'}) ;
-%                  % Display elapsed time
-fprintf('\nSTOPLOOP: elapsed time (s): %5.2f\n',toc)
-%                  % start the loop
-while(~FS.Stop() && toc < 5),       % Check if the loop has to be stopped
-    fprintf('%c',repmat(8,6,1)) ;   % clear up previous time
-    fprintf('%5.2f\n',toc) ;        % display elapsed time
+FS = stoploop({'Press  f to freeze, u to unfreeze and s to save in freeze mode'});
+    %return;
+    %FS.Clear() ; 
+    %clear FS ;
+%end
+
+function F = stoploop(str)
+error(nargoutchk(1,1,nargout)) ;
+
+if nargin,
+    if ~ischar(str) && ~iscellstr(str),
+        error([mfilename ':InputString'],...
+            'Input should be a string, or a cell array of strings.') ;
+    end
+else
+    % default message string
+    str = 'Stop the Loop' ;
 end
-FS.Clear() ;  % Clear up the box
-clear FS ;    % this structure has no use anymore
+
+% create a msgbox displaying the string
+H = msgbox(str,'STOPLOOP') ;
+
+% create the two anonymous functions
+F.Stop = @() stopfun(H) ; % false if message box still exists
+F.Clear = @() clearfun(H) ; % delete message box
+
+function r = stopfun(H)
+drawnow ;          % ensure that button presses are recorded
+r = ~ishandle(H) ; % false if message box still exists
+end 
+
+function clearfun(H)
+% clear the message box if it still exists
+if ishandle(H),
+    delete(H) ;
+end
+end
 end

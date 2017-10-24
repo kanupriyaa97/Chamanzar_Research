@@ -1,15 +1,16 @@
 function main()
-    imnum = 0;
+    %imnum = 0;
     cam = webcam(1);
+    main2;
+    
     while 1
         imdata = snapshot(cam);
-		imdata(:,:,1) = 0;
-        imshow(imdata);
-        main2;
-        if(ans == 102)
-            freeze(imdata, imnum);
+        imagesc(imdata(:,:,1));
+        %main2;
+        %if(ans == 102)
+            %freeze(imdata, imnum);
             %return;
-        end
+        %end
     end 
     clear cam;
 end
@@ -18,7 +19,7 @@ end
 function freeze(imdata,imnum)
     while 1
         imshow(imdata);
-        main2;
+        %main2;
         if (ans == 117)
             return;
         end
@@ -36,5 +37,5 @@ function take_pic(imnum, imdata)
     thisfile = sprintf(nametemplate, imnum);
     fullname = fullfile(savepath, thisfile);
     imwrite(imdata, fullname);
-
+    
 end
