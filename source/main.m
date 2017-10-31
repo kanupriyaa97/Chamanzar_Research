@@ -1,31 +1,47 @@
 function main()
-    %imnum = 0;
-    cam = webcam(1);
-    main2;
+    close all;
+    clear all;
+    imnum = 0;
+    
+    cam = webcam('Lenovo EasyCamera');
+    k=[];
+    set(gcf,'keypress','k=get(gcf,"current char");');
     
     while 1
         imdata = snapshot(cam);
         imagesc(imdata(:,:,1));
-        %main2;
-        %if(ans == 102)
-            %freeze(imdata, imnum);
-            %return;
-        %end
+        disp(~isempty(k));
+        if ~isempty(k)
+            if strcmp(k,'f')
+                disp('f');
+                freeze(imdata);
+                k = [];
+            end
+            if strcmp(k,'x')
+                disp('x');
+                clear all;
+                close all;
+                return;
+            end
+            if strcmp(k,'s')
+                take_pic(imnum,imdata);
+                imnum = imnum + 1;
+                k = [];
+            end
+        end
     end 
-    clear cam;
 end
 
 
-function freeze(imdata,imnum)
+function freeze(imdata)
+    m=[];
+    set(gcf,'keypress','m=get(gcf,''current char'');');
     while 1
         imshow(imdata);
-        %main2;
-        if (ans == 117)
-            return;
-        end
-        if (ans == 115)
-            take_pic(imnum,imdata);
-            imnum = imnum + 1;
+        if ~isempty(m)
+            if strcmp(m,'u')
+                return;
+            end
         end
     end
 end
