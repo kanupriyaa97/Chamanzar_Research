@@ -1,19 +1,22 @@
-function main()
+function main2()
     close all;
     clear all;
     imnum = 0;
     
-    cam = webcam('Lenovo EasyCamera');
-    k=[];
-    set(gcf,'keypress','k=get(gcf,"current char");');
+    cam = webcam('Microsoft® LifeCam HD-3000');
+    k = [];
+    %we first check for key press and then getthe most recent key press
+    %instead of getting the most recent key press and then checking if the 
+    %key was pressed.
+    set(gcf,'KeyPressFcn','k = get(gcf, "CurrentCharacter");');
     
     while 1
         imdata = snapshot(cam);
         imagesc(imdata(:,:,1));
-        disp(~isempty(k));
+        disp(k);
         if ~isempty(k)
             if strcmp(k,'f')
-                disp('f');
+                disp('freeze');
                 freeze(imdata);
                 k = [];
             end
@@ -34,15 +37,16 @@ end
 
 
 function freeze(imdata)
-    m=[];
-    set(gcf,'keypress','m=get(gcf,''current char'');');
+    %m=[];
+    %set(gcf,'keypress','m=get(gcf,''current char'');');
     while 1
         imshow(imdata);
-        if ~isempty(m)
-            if strcmp(m,'u')
-                return;
-            end
-        end
+        pause;
+        %if ~isempty(m)
+            %if strcmp(m,'u')
+                %return;
+            %end
+        %end
     end
 end
 
