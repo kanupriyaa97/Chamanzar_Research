@@ -1,61 +1,59 @@
-function main2()
-    close all;
-    clear all;
-    imnum = 0;
-    
-    cam = webcam('Microsoft® LifeCam HD-3000');
-    k = [];
-    %we first check for key press and then getthe most recent key press
-    %instead of getting the most recent key press and then checking if the 
-    %key was pressed.
-    set(gcf,'KeyPressFcn','k = get(gcf, "CurrentCharacter");');
-    
-    while 1
-        imdata = snapshot(cam);
-        imagesc(imdata(:,:,1));
-        disp(k);
-        if ~isempty(k)
-            if strcmp(k,'f')
-                disp('freeze');
-                freeze(imdata);
-                k = [];
-            end
-            if strcmp(k,'x')
-                disp('x');
-                clear all;
-                close all;
-                return;
-            end
-            if strcmp(k,'s')
-                take_pic(imnum,imdata);
-                imnum = imnum + 1;
-                k = [];
-            end
-        end
-    end 
+close all;
+clear all;
+clc;
+
+%setup 
+cam = webcam('Microsoft® LifeCam HD-3000');
+imnum = 0;
+k=[];
+set(gcf,'keypress','k=get(gcf,''currentchar'');');
+
+%start of main loop
+while 1
+    data=snapshot(cam);
+    imdata = data(:,:,1);
+    imagesc(imdata);
+
+  if ~isempty(k)
+    %save picture
+    if strcmp(k,'s')
+        take_pic(imnum,imdata);
+        imnum = imnum + 1;
+    end
+    %exit out of function
+    if strcmp(k,'x')
+        clear all;
+        close all;
+        stop(cam);
+        flushdata(cam);
+        k = [];
+        clc;
+    end
+    %freeze video
+    if strcmp(k,'f')
+        k = []; 
+        freeze(imdata,k); 
+    end
+  end
 end
 
-
-function freeze(imdata)
-    %m=[];
-    %set(gcf,'keypress','m=get(gcf,''current char'');');
+function freeze(imdata,k)
     while 1
-        imshow(imdata);
-        pause;
-        %if ~isempty(m)
-            %if strcmp(m,'u')
-                %return;
-            %end
-        %end
+        imagesc(imdata);
+        disp(k);
+        if ~isempty(k)
+            if strcmp(k,'u')
+                return;
+            end
+        end
     end
 end
 
 function take_pic(imnum, imdata)
-
-    savepath = 'C:\Users\Kanupriyaa\Desktop';
+    savepath = 'C:\';
     nametemplate = 'image_%04d.png';
     thisfile = sprintf(nametemplate, imnum);
     fullname = fullfile(savepath, thisfile);
     imwrite(imdata, fullname);
-    
+    return;
 end
