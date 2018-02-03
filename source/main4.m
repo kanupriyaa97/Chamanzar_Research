@@ -1,4 +1,5 @@
 function main4()
+
     tic ;         % We will measure elapsed time in a loop
 %                  % Set up the stop box:
     FS = stoploop({'Stop me before', '5 seconds have elapsed'}) ;

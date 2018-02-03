@@ -5,6 +5,7 @@ function main3()
 
 
 function [key qflag] = kbhit(cmd)
+
 % Returns the last key pressed in the command window
 %
 % kbhit('init')        : initialise listening

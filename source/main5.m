@@ -5,6 +5,7 @@ FS = stoploop({'Press  f to freeze, u to unfreeze and s to save in freeze mode'}
 %end
 
 function F = stoploop(str)
+
 error(nargoutchk(1,1,nargout)) ;
 
 if nargin,

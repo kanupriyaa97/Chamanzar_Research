@@ -1,4 +1,5 @@
 function freeze(imdata)
+
 m=[];
 set(gcf,'keypress','k=get(gcf,''currentchar'');');
 while 1

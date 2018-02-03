@@ -1,5 +1,6 @@
 function ch = getkey(m) 
 
+
 % GETKEY - get a single keypress
 %   CH = GETKEY waits for a keypress and returns the ASCII code. Accepts
 %   all ascii characters, including backspace (8), space (32), enter (13),

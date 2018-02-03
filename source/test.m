@@ -6,6 +6,7 @@ k=[];
 set(gcf,'keypress','k=get(gcf,''currentchar'');');
 while 1
     data=snapshot(cam);
+    
     imdata = data(:,:,1);
     imagesc(imdata);
 
