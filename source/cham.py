@@ -1,6 +1,8 @@
 import matlab.engine
 eng = matlab.engine.start_matlab()
 
+
+#Does the entire loop
 def main():
     # Create the webcam object.
     cam = webcam()
