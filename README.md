@@ -1,2 +1,1 @@
-# brain
-Small scripts that help in producing and analyzing video using Matlab.
+Small scripts that help in producing and analyzing videos from the brain using Matlab.
